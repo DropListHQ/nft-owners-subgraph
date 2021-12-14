@@ -1,0 +1,36 @@
+type Nft @entity {
+  id: ID!
+  contract: NftContract!
+  tokenID: BigInt!
+  nftOwners: [NftOwner!]! @derivedFrom(field: "nft")
+  creatorAddress: Bytes
+  tokenURI: String!
+  createdAt: BigInt!
+  removedAt: BigInt
+}
+
+type NftContract @entity {
+  id: ID!
+  name: String!
+  type: String!
+  symbol: String
+  nfts: [Nft!]! @derivedFrom(field: "contract")
+  nftOwners: [NftOwner!]! @derivedFrom(field: "contract")
+  numTokens: BigInt!
+  numOwners: BigInt!
+}
+
+type NftOwner @entity {
+  id: ID!
+  owner: Bytes!
+  nft: Nft!
+  contract: NftContract
+  quantity: BigInt!
+}
+
+type ContractOwner @entity {
+  id: ID! # NftContract/owner
+  owner: NftOwner!
+  contract: NftContract!
+  numTokens: BigInt! 
+}

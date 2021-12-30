@@ -133,11 +133,10 @@ export function processTransfer (
     if (newContractOwner == null) {
       newContractOwner = new ContractOwner(newContractOwnerId);
       newContractOwner.owner = ownershipId;
-      if (nftOwner != null) {
-        newContractOwner.contract = nftContract.id;
-      }
+      newContractOwner.contract = nftContract.id;
       newContractOwner.numTokens = BIGINT_ZERO;
     }
+
     // if numTokens = 1, new owner found, increment numOwners in NftContract
     if (newContractOwner.numTokens.equals(BIGINT_ONE)) {
       nftContract.numOwners = nftContract.numOwners.plus(BIGINT_ONE);

@@ -101,9 +101,9 @@ export function updateOwnership (
 
   if (newQuantity.lt(BIGINT_ZERO)) {
     log.debug('Negative token quantity: ' + newQuantity.toString(), [])
-    store.remove('NftOwners', ownershipId)
+    store.remove('NftOwner', ownershipId)
   } else if (newQuantity.isZero()) {
-    store.remove('NftOwners', ownershipId)
+    store.remove('NftOwner', ownershipId)
   } else {
     nftOwner.quantity = newQuantity
     nftOwner.save()

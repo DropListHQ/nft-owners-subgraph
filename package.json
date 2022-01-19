@@ -5,9 +5,9 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ nft-owners",
-    "create-local": "graph create --node http://127.0.0.1:8020/ nnft-owners",
-    "remove-local": "graph remove --node http://127.0.0.1:8020/ nnft-owners",
-    "deploy-local": "graph deploy --node http://127.0.0.1:8020/ --ipfs http://127.0.0.1:5001 nnft-owners"
+    "create-local": "graph create --node http://127.0.0.1:8020/ nft-owners",
+    "remove-local": "graph remove --node http://127.0.0.1:8020/ nft-owners",
+    "deploy-local": "graph deploy --node http://127.0.0.1:8020/ --ipfs http://127.0.0.1:5001 nft-owners"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.19.0",

@@ -7,7 +7,7 @@ dataSources:
     network: mainnet
     source:
       abi: ERC1155
-      startBlock: 5806610 # 13010732 <- use some recent block for quick testing.
+      startBlock: 5806610
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -37,7 +37,7 @@ dataSources:
     network: mainnet
     source:
       abi: ERC721
-      startBlock: 5806610 # 13010732
+      startBlock: 5806610
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

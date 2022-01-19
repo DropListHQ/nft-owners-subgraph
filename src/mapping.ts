@@ -52,6 +52,11 @@ export function handleTransfer (event: Transfer): void {
   }
 
   if (event.params.to != ZERO_ADDRESS) {
+
+    // minting 1
+    if (event.params.from == ZERO_ADDRESS) {
+      nftContract.numTokens = nftContract.numTokens.plus(BIGINT_ONE);
+    }
     // Transferring to, increment numTokens for this owner
     let newContractOwnerId = address + "/" + event.params.to.toHexString();
     let newContractOwner = ContractOwner.load(newContractOwnerId)
@@ -63,13 +68,12 @@ export function handleTransfer (event: Transfer): void {
       newContractOwner.numTokens = BIGINT_ZERO;
 
     }
-    // if numTokens = 1, new owner found, increment numOwners in NftContract
-    if (newContractOwner.numTokens.equals(BIGINT_ONE)) {
+    // if numTokens = 0, new owner found, increment numOwners in NftContract
+    if (newContractOwner.numTokens.equals(BIGINT_ZERO)) {
       nftContract.numOwners = nftContract.numOwners.plus(BIGINT_ONE);
     }
     newContractOwner.numTokens = newContractOwner.numTokens.plus(BIGINT_ONE);
     newContractOwner.save();
-    nftContract.numTokens = nftContract.numTokens.plus(BIGINT_ONE);    
   } else { // burn
     // store.remove('Nft', id);
     nftContract.numTokens = nftContract.numTokens.minus(BIGINT_ONE);

@@ -117,13 +117,12 @@ export function processTransfer (
       newContractOwner.contract = nftContract.id;
       newContractOwner.numTokens = BIGINT_ZERO;
     }
-    // if numTokens = 1, new owner found, increment numOwners in NftContract
-    if (newContractOwner.numTokens.equals(BIGINT_ONE)) {
+    // if numTokens = 0, new owner found, increment numOwners in NftContract
+    if (newContractOwner.numTokens.equals(BIGINT_ZERO)) {
       nftContract.numOwners = nftContract.numOwners.plus(BIGINT_ONE);
     }
     newContractOwner.numTokens = newContractOwner.numTokens.plus(BIGINT_ONE);
     newContractOwner.save();
-    nftContract.numTokens = nftContract.numTokens.plus(BIGINT_ONE);    
   } else { // burn
     // store.remove('Nft', id);
     nftContract.numTokens = nftContract.numTokens.minus(BIGINT_ONE);

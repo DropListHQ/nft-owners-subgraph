@@ -97,7 +97,7 @@ function transferBase (
 
   let nftContract = NftContract.load(contractAddress.toHexString());
 
-  let ownershipId = nftId + '/' + to.toHexString();
+  let ownershipId = nftId; // + '/' + to.toHexString();
   let nftOwner = NftOwner.load(ownershipId)
 
   if (from != ZERO_ADDRESS) {
@@ -112,7 +112,7 @@ function transferBase (
       contractOwner.numTokens = contractOwner.numTokens.minus(BIGINT_ONE);
       contractOwner.save();
     }
-    updateOwnership(nftId, from, BIGINT_ZERO.minus(value), nftContract, nftOwner)
+    updateOwnership(nftId, from, BIGINT_ZERO.minus(value), nftContract, nftOwner, timestamp)
   }
 
   if (to != ZERO_ADDRESS) {
@@ -138,5 +138,5 @@ function transferBase (
     // store.remove('Nft', id);
     nftContract.numTokens = nftContract.numTokens.minus(BIGINT_ONE);
   }
-  updateOwnership(nftId, to, value, nftContract, nftOwner);
+  updateOwnership(nftId, to, value, nftContract, nftOwner, timestamp);
 }

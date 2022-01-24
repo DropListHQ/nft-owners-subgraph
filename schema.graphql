@@ -26,6 +26,7 @@ type NftOwner @entity {
   nft: Nft!
   contract: NftContract
   quantity: BigInt!
+  timestamp: BigInt
 }
 
 type ContractOwner @entity {

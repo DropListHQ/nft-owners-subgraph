@@ -32,7 +32,7 @@ export function handleTransfer (event: Transfer): void {
 
   let nftContract = NftContract.load(address);
 
-  let ownershipId = nftId + '/' + event.params.to.toHexString()
+  let ownershipId = nftId; // + '/' + event.params.to.toHexString()
   let nftOwner = NftOwner.load(ownershipId)
 
   if (event.params.from != ZERO_ADDRESS) {
@@ -48,7 +48,7 @@ export function handleTransfer (event: Transfer): void {
       contractOwner.save();
     }
 
-    updateOwnership(nftId, event.params.from, BIGINT_ZERO.minus(BIGINT_ONE), nftContract, nftOwner);
+    updateOwnership(nftId, event.params.from, BIGINT_ZERO.minus(BIGINT_ONE), nftContract, nftOwner, event.block.timestamp);
   }
 
   if (event.params.to != ZERO_ADDRESS) {
@@ -80,7 +80,7 @@ export function handleTransfer (event: Transfer): void {
   }
 
   nftContract.save();
-  updateOwnership(nftId, event.params.to, BIGINT_ONE, nftContract, nftOwner)
+  updateOwnership(nftId, event.params.to, BIGINT_ONE, nftContract, nftOwner, event.block.timestamp)
 }
 
 export function updateOwnership (
@@ -88,9 +88,10 @@ export function updateOwnership (
   owner: Address,
   deltaQuantity: BigInt,
   contract: NftContract | null,
-  nftOwner: NftOwner | null
+  nftOwner: NftOwner | null,
+  timestamp: BigInt
 ): void {
-  let ownershipId = nftId + '/' + owner.toHexString()
+  let ownershipId = nftId; // + '/' + owner.toHexString()
   // let nftOwner = NftOwners.load(ownershipId)
 
   if (nftOwner == null) {
@@ -109,8 +110,9 @@ export function updateOwnership (
   } else if (newQuantity.isZero()) {
     store.remove('NftOwner', ownershipId)
   } else {
-    nftOwner.quantity = newQuantity
-    nftOwner.save()
+    nftOwner.quantity = newQuantity;
+    nftOwner.timestamp = timestamp;
+    nftOwner.save();
   }
 }
 

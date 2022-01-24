@@ -87,7 +87,7 @@ export function processTransfer (
   }
   let nftContract = NftContract.load(contractAddress.toHexString());
 
-  let ownershipId = nftId + '/' + to.toHexString()
+  let ownershipId = nftId; // + '/' + to.toHexString()
   let nftOwner = NftOwner.load(ownershipId)
 
   if (from != ZERO_ADDRESS) {
@@ -103,10 +103,15 @@ export function processTransfer (
       contractOwner.save();
     }
 
-    updateOwnership(nftId, from, BIGINT_ZERO.minus(value), nftContract, nftOwner);
+    updateOwnership(nftId, from, BIGINT_ZERO.minus(value), nftContract, nftOwner, timestamp);
   }
 
   if (to != ZERO_ADDRESS) {
+
+    // minting 1
+    if (from == ZERO_ADDRESS) {
+      nftContract.numTokens = nftContract.numTokens.plus(BIGINT_ONE);
+    }
     // Transferring to, increment numTokens for this owner
     let newContractOwnerId = contractAddress.toHexString() + "/" + to.toHexString();
     let newContractOwner = ContractOwner.load(newContractOwnerId)
@@ -129,5 +134,5 @@ export function processTransfer (
   }
   nftContract.save();
 
-  updateOwnership(nftId, to, value, nftContract, nftOwner);
+  updateOwnership(nftId, to, value, nftContract, nftOwner, timestamp);
 }
